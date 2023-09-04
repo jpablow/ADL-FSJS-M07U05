@@ -2,10 +2,31 @@ const { obtenerJoyas } = require('./consultas');
 const express = require('express');
 const app = express();
 
-app.listen(3000, console.log('Servidor iniciado en http://localhost:3000'));
+const puerto = 3000;
+const urlBase = `http://localhost:${puerto}`;
+app.listen(puerto, console.log(`Servidor iniciado en ${urlBase}`));
 
 // 1. Crear una ruta GET /joyas que:
 //      a. Devuelva la estructura HATEOAS de todas las joyas almacenadas en la base de datos (1.5 puntos)
+
+const prepararHATEOAS = (joyas) => {
+  const results = joyas
+    .map((j) => {
+      return {
+        name: j.nombre,
+        href: `${urlBase}/joyas/joya/${j.id}`,
+      };
+    })
+    .slice(0);
+  const totalJoyas = joyas.length;
+  const stockTotal = joyas.reduce((ant, act) => ant + act.stock, 0);
+  const HATEOAS = {
+    totalJoyas,
+    stockTotal,
+    results,
+  };
+  return HATEOAS;
+};
 
 //      b. Reciba en la query string los parámetros (2 puntos):
 
@@ -16,7 +37,8 @@ app.listen(3000, console.log('Servidor iniciado en http://localhost:3000'));
 app.get('/joyas', async (req, res) => {
   const queryString = req.query;
   const joyas = await obtenerJoyas(queryString);
-  return res.json(joyas);
+  const HATEOAS = await prepararHATEOAS(joyas);
+  return res.json(HATEOAS);
 });
 
 // 2. Crear una ruta GET /joyas/filtros que reciba los siguientes parámetros en la query string: (3.5 puntos)

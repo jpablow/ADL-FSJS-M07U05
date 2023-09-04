@@ -10,7 +10,11 @@ const pool = new Pool({
   allowExitOnIdle: true,
 });
 
-const obtenerJoyas = async ({ limits, page, order_by }) => {
+const obtenerJoyas = async ({
+  limits = 100,
+  page = 1,
+  order_by = 'id_ASC',
+}) => {
   const [campo, direccion] = order_by.split('_');
   const offset = (page - 1) * limits;
   let consulta = format(
