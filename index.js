@@ -1,3 +1,4 @@
+const { obtenerJoyas } = require('./consultas');
 const express = require('express');
 const app = express();
 

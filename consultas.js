@@ -5,7 +5,7 @@ const pool = new Pool({
   user: 'JPW',
   host: 'localhost',
   password: 'gogo2580',
-  database: 'farmacia',
+  database: 'joyas',
   port: 5432,
   allowExitOnIdle: true,
 });
