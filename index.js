@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
 
+app.listen(3000, console.log('Servidor iniciado en http://localhost:3000'));
+
 // 1. Crear una ruta GET /joyas que:
+//      a. Devuelva la estructura HATEOAS de todas las joyas almacenadas en la base de datos (1.5 puntos)
 
-// a. Devuelva la estructura HATEOAS de todas las joyas almacenadas en la base de datos (1.5 puntos)
+//      b. Reciba en la query string los parámetros (2 puntos):
 
-// b. Reciba en la query string los parámetros (2 puntos):
-// i. limits: Limita la cantidad de joyas a devolver por página
-// ii. page: Define la página
-// iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: stock_ASC
+//          i. limits: Limita la cantidad de joyas a devolver por página
+//          ii. page: Define la página
+//          iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: stock_ASC
 
 // 2. Crear una ruta GET /joyas/filtros que reciba los siguientes parámetros en la query string: (3.5 puntos)
 
