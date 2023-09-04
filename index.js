@@ -1,4 +1,4 @@
-const { obtenerJoyas } = require('./consultas');
+const { obtenerJoyas, filtrarJoyas } = require('./consultas');
 const express = require('express');
 const app = express();
 
@@ -43,10 +43,16 @@ app.get('/joyas', async (req, res) => {
 
 // 2. Crear una ruta GET /joyas/filtros que reciba los siguientes parámetros en la query string: (3.5 puntos)
 
-// a. precio_max: Filtrar las joyas con un precio mayor al valor recibido
-// b. precio_min: Filtrar las joyas con un precio menor al valor recibido.
-// c. categoria: Filtrar las joyas por la categoría
-// d. metal: Filtrar las joyas por la categoría
+//      a. precio_max: Filtrar las joyas con un precio mayor al valor recibido
+//      b. precio_min: Filtrar las joyas con un precio menor al valor recibido.
+//      c. categoria: Filtrar las joyas por la categoría
+//      d. metal: Filtrar las joyas por la categoría
+
+app.get('/joyas/filtros', async (req, res) => {
+  const queryString = req.query;
+  const joyas = await filtrarJoyas(queryString);
+  return res.json(joyas);
+});
 
 // 3. Implementar middlewares para generar informes o reportes de alguna actividad o evento específico que ocurra en cada una de las rutas. (1 puntos)
 
