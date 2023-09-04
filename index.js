@@ -12,6 +12,12 @@ app.listen(3000, console.log('Servidor iniciado en http://localhost:3000'));
 //          ii. page: Define la página
 //          iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: stock_ASC
 
+app.get('/joyas', async (req, res) => {
+  const queryString = req.query;
+  const joyas = await obtenerJoyas(queryString);
+  return res.json(joyas);
+});
+
 // 2. Crear una ruta GET /joyas/filtros que reciba los siguientes parámetros en la query string: (3.5 puntos)
 
 // a. precio_max: Filtrar las joyas con un precio mayor al valor recibido
