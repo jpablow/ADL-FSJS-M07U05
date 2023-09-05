@@ -6,6 +6,25 @@ const puerto = 3000;
 const urlBase = `http://localhost:${puerto}`;
 app.listen(puerto, console.log(`Servidor iniciado en ${urlBase}`));
 
+const reportarConsultas = async (req, res, next) => {
+  const parametros = req.query;
+  const url = req.url;
+  const metodo = req.method;
+  const ruta = req.path;
+  const query = req.query;
+  console.log(
+    `
+🟢 ${new Date()}
+📍 Nueva consulta con los siguientes datos:
+🔸 URL:        ${url}
+🔸 Ruta:       ${ruta}
+🔸 Método:     ${metodo}
+🔸 Parámetros: `,
+    parametros
+  );
+  next();
+};
+
 // 1. Crear una ruta GET /joyas que:
 //      a. Devuelva la estructura HATEOAS de todas las joyas almacenadas en la base de datos (1.5 puntos)
 
@@ -34,7 +53,7 @@ const prepararHATEOAS = (joyas) => {
 //          ii. page: Define la página
 //          iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: stock_ASC
 
-app.get('/joyas', async (req, res) => {
+app.get('/joyas', reportarConsultas, async (req, res) => {
   const queryString = req.query;
   const joyas = await obtenerJoyas(queryString);
   const HATEOAS = await prepararHATEOAS(joyas);
@@ -48,7 +67,7 @@ app.get('/joyas', async (req, res) => {
 //      c. categoria: Filtrar las joyas por la categoría
 //      d. metal: Filtrar las joyas por la categoría
 
-app.get('/joyas/filtros', async (req, res) => {
+app.get('/joyas/filtros', reportarConsultas, async (req, res) => {
   const queryString = req.query;
   const joyas = await filtrarJoyas(queryString);
   return res.json(joyas);
