@@ -78,3 +78,7 @@ app.get('/joyas/filtros', reportarConsultas, async (req, res) => {
 // 4. Usar try catch para capturar los posibles errores durante una consulta y la lógica de cada ruta creada. (1 puntos)
 
 // 5. Usar las consultas parametrizadas para evitar el SQL Injection en la consulta a la base de datos relacionada con la ruta GET /joyas/filtros (1 puntos)
+
+app.get('*', (req, res) => {
+  res.status(404).send('🚧 Ruta inexistente 🚧');
+});
